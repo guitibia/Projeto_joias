@@ -190,6 +190,35 @@ app.post('/admin/cadastrar-produto', upload.single('imagem'), (req, res) => {
   });
 });
 
+// Rota para exibir produtos filtrados por categoria
+app.get('/categoria/:tipo', (req, res) => {
+  const tipo = req.params.tipo;
+  console.log('Categoria recebida:', tipo);  // Para ver se a rota está sendo chamada corretamente
+
+  const query = 'SELECT * FROM produtos WHERE tipo = ?';
+  
+  db.query(query, [tipo], (err, produtos) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Erro ao buscar produtos');
+    }
+
+    let clienteLogado = null;
+    if (req.session.cliente_id) {  // Verificar se o cliente está logado
+      db.query('SELECT * FROM clientes WHERE id = ?', [req.session.cliente_id], (err, results) => {
+        if (err) throw err;
+        clienteLogado = results[0];  // Armazena as informações do cliente logado
+
+        // Se a consulta ao banco de dados for bem-sucedida, renderiza a página com os dados
+        res.render('index', { produtos, clienteLogado, mensagem: produtos.length === 0 ? 'Nenhum produto encontrado para esta categoria.' : null });
+      });
+    } else {
+      // Se não houver cliente logado, renderiza a página sem clienteLogado
+      res.render('index', { produtos, clienteLogado: null, mensagem: produtos.length === 0 ? 'Nenhum produto encontrado para esta categoria.' : null });
+    }
+  });
+});
+
 
 // Rota de exibição do carrinho
 app.get('/carrinho', (req, res) => {

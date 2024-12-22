@@ -39,13 +39,13 @@
 
   <div class="container-fluid">
     <div class="row">
+      <!-- Menu lateral -->
       <div class="col-md-3 menu-lateral">
         <h4>Categorias</h4>
-        <a href="#">Brincos</a>
-        <a href="#">Colares</a>
-        <a href="#">Anéis</a>
-        <a href="#">Pulseiras</a>
-        <a href="#">Conjuntos</a>
+        <a href="/categoria/Anel">Anéis</a>
+        <a href="/categoria/Pulseira">Pulseiras</a>
+        <a href="/categoria/Colar">Colares</a>
+        <a href="/categoria/Conjunto">Conjuntos</a>
 
         <!-- Exibindo a opção de cadastro de produtos somente para administradores -->
         <% if (clienteLogado && clienteLogado.is_admin===1) { %>
