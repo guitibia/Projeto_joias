@@ -171,11 +171,16 @@ app.post('/admin/cadastrar-produto', upload.single('imagem'), (req, res) => {
     return res.status(403).send("Acesso restrito!"); // Impede que usuários não administradores cadastrem produtos
   }
 
-  const { nome, descricao, preco } = req.body;
+  const { nome, descricao, preco, tipo } = req.body;
   const imagem = req.file ? req.file.filename : null; // Armazenando o nome da imagem
 
-  const query = 'INSERT INTO produtos (nome, descricao, preco, imagem) VALUES (?, ?, ?, ?)';
-  db.query(query, [nome, descricao, preco, imagem], (err, result) => {
+  // Validação dos dados (opcional)
+  if (!nome || !descricao || !preco || !tipo || !imagem) {
+    return res.status(400).send('Todos os campos são obrigatórios');
+  }
+
+  const query = 'INSERT INTO produtos (nome, descricao, preco, tipo, imagem) VALUES (?, ?, ?, ?, ?)';
+  db.query(query, [nome, descricao, preco, tipo, imagem], (err, result) => {
     if (err) {
       console.error("Erro ao cadastrar produto:", err);
       return res.status(500).send("Erro ao cadastrar produto");

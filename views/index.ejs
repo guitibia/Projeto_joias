@@ -69,6 +69,9 @@
                 <p>
                   <%= produto.descricao %>
                 </p>
+                <p>
+                  <%= produto.tipo %>
+                </p>
                 <p>Valor R$ <%= typeof produto.preco==='number' && !isNaN(produto.preco) ? produto.preco.toFixed(2)
                     : 'Valor inválido' %>
                 </p>
