@@ -1,0 +1,98 @@
+/* Estilos para a página */
+.banner {
+  background: url('/uploads/banner-topo.png') no-repeat center center;
+  background-size: cover;
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.banner h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.menu-lateral {
+  background-color: #f8f9fa;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.menu-lateral a {
+  display: block;
+  padding: 10px 20px;
+  color: #343a40;
+  text-decoration: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-lateral a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.conteudo-principal {
+  padding: 20px;
+}
+
+.categoria {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+}
+
+.categoria img {
+  max-width: 100%;
+  height: auto;
+}
+
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* Estilos para o menu superior */
+.navbar {
+  background-color: #fff;
+  padding: 10px 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-item {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.navbar .nav-item a {
+  color: #343a40;
+  text-decoration: none;
+}
+
+.navbar .nav-item a:hover {
+  color: #007bff;
+}
+
+.login-icon {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-left: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.user-info span {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.user-info a {
+  color: #007bff;
+  font-size: 1.2rem;
+}
