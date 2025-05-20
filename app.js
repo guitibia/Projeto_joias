@@ -326,68 +326,6 @@ app.post("/carrinho/remover", (req, res) => {
   });
 });
 
-// Rota para finalizar pedido e redirecionar para o WhatsApp
-// app.get("/finalizar", (req, res) => {
-//   const cliente_id = req.session.cliente_id;
-//   if (!cliente_id) return res.redirect("/login");
-//   const carrinhoQuery = `SELECT produtos.id as produto_id, produtos.nome, produtos.preco, carrinho.quantidade
-//                            FROM carrinho
-//                            JOIN produtos ON carrinho.produto_id = produtos.id
-//                            WHERE carrinho.cliente_id = ?`;
-//   db.query(carrinhoQuery, [cliente_id], (err, produtos) => {
-//     if (err) throw err;
-//     if (produtos.length === 0) return res.redirect("/carrinho");
-
-//     let total = 0;
-//     produtos.forEach((produto) => {
-//       total += produto.preco * produto.quantidade;
-//     });
-
-//     // Salva o pedido
-//     const pedidoQuery = "INSERT INTO pedidos (cliente_id, total) VALUES (?, ?)";
-//     db.query(pedidoQuery, [cliente_id, total], (err, result) => {
-//       if (err) throw err;
-//       const pedido_id = result.insertId;
-
-//       // Salva os itens do pedido
-//       const itensQuery =
-//         "INSERT INTO pedido_itens (pedido_id, produto_id, quantidade, preco_unitario) VALUES ?";
-//       const itensValues = produtos.map((produto) => [
-//         pedido_id,
-//         produto.produto_id,
-//         produto.quantidade,
-//         produto.preco,
-//       ]);
-//       db.query(itensQuery, [itensValues], (err) => {
-//         if (err) throw err;
-
-//         // Limpa o carrinho do cliente
-//         db.query(
-//           "DELETE FROM carrinho WHERE cliente_id = ?",
-//           [cliente_id],
-//           (err) => {
-//             if (err) throw err;
-
-//             // Monta a mensagem para o WhatsApp
-//             let mensagem = "Olá! Gostaria de finalizar meu pedido:%0A";
-//             produtos.forEach((produto) => {
-//               mensagem += `• ${produto.nome} (Qtd: ${
-//                 produto.quantidade
-//               }) - R$ ${(produto.preco * produto.quantidade)
-//                 .toFixed(2)
-//                 .replace(".", ",")}%0A`;
-//             });
-//             mensagem += `%0ATotal: R$ ${total.toFixed(2).replace(".", ",")}`;
-//             const numeroLoja = "5519995444947"; // Substitua pelo número da loja
-//             const urlWhatsapp = `https://wa.me/${numeroLoja}?text=${mensagem}`;
-//             res.redirect(urlWhatsapp);
-//           }
-//         );
-//       });
-//     });
-//   });
-// });
-
 // Rota para exibir os pedidos do cliente
 app.get("/meus-pedidos", (req, res) => {
   const cliente_id = req.session.cliente_id;
@@ -485,6 +423,42 @@ app.post("/finalizar", (req, res) => {
           });
         });
       });
+    }
+  );
+});
+
+// Rota para exibir todos os pedidos (admin)
+app.get("/admin/pedidos", (req, res) => {
+  if (!req.session.cliente_id || req.session.is_admin !== 1) {
+    return res.status(403).send("Acesso negado");
+  }
+  const pedidosQuery = `
+        SELECT p.id, p.data_pedido, p.status, p.total, c.nome as cliente,
+               GROUP_CONCAT(CONCAT(pi.quantidade, 'x ', pr.nome, ' (R$ ', FORMAT(pi.preco_unitario,2,'pt_BR'), ')') SEPARATOR ', ') as itens
+        FROM pedidos p
+        JOIN clientes c ON p.cliente_id = c.id
+        JOIN pedido_itens pi ON p.id = pi.pedido_id
+        JOIN produtos pr ON pi.produto_id = pr.id
+        GROUP BY p.id
+        ORDER BY p.data_pedido DESC
+    `;
+  db.query(pedidosQuery, (err, pedidos) => {
+    if (err) throw err;
+    res.render("admin-pedidos", { pedidos });
+  });
+});
+
+app.post("/admin/pedidos/status", (req, res) => {
+  if (!req.session.cliente_id || req.session.is_admin !== 1) {
+    return res.status(403).send("Acesso negado");
+  }
+  const { pedido_id, status } = req.body;
+  db.query(
+    "UPDATE pedidos SET status = ? WHERE id = ?",
+    [status, pedido_id],
+    (err) => {
+      if (err) throw err;
+      res.redirect("/admin/pedidos");
     }
   );
 });

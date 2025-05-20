@@ -74,6 +74,7 @@
         <!-- Exibindo a opção de cadastro de produtos somente para administradores -->
         <% if (clienteLogado && clienteLogado.is_admin===1) { %>
           <a href="/admin/cadastrar-produto" class="btn btn-success">Cadastrar Produto</a>
+          <a href="/admin/pedidos" class="btn btn-success">Lista Pedidos</a>
           <% } %>
       </div>
 
