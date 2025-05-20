@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pedido Finalizado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(120deg, #f9c6b2 0%, #f7b7c0 50%, #bfaee0 100%);
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+
+    .finalizado-card {
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+      background: #fff;
+      padding: 2rem 1.5rem;
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      padding: 0.7rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .btn-whatsapp:hover {
+      background: #128c7e;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light"
+    style="background: linear-gradient(90deg, #f9c6b2 0%, #f7b7c0 50%, #bfaee0 100%); box-shadow: 0 4px 12px rgba(191,174,224,0.10);">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/"
+        style="font-weight:700; font-size:1.7rem; letter-spacing:2px; color:#a68bc7;">
+        <i class="bi bi-gem me-2" style="font-size:2rem; color:#a68bc7;"></i>
+        Joias Elegance
+      </a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="finalizado-card">
+      <h2 class="mb-3" style="color:#a68bc7;">Pedido Finalizado!</h2>
+      <p class="fs-5">Seu pedido foi registrado com sucesso.<br>
+        Clique no botão abaixo para enviar os detalhes do pedido pelo WhatsApp:</p>
+      <a href="<%= urlWhatsapp %>" target="_blank" class="btn btn-whatsapp">
+        <i class="bi bi-whatsapp"></i> Enviar pelo WhatsApp
+      </a>
+      <div class="mt-4">
+        <a href="/meus-pedidos" class="btn btn-outline-secondary">Ver meus pedidos</a>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

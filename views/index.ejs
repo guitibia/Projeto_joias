@@ -5,37 +5,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lbt Acessórios</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/public/css/style.css">
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
 <body>
 
   <!-- Barra de navegação superior -->
-  <nav class="navbar">
+  <nav class="navbar navbar-expand-lg navbar-light"
+    style="background: linear-gradient(90deg, #f9c6b2 0%, #f7b7c0 50%, #bfaee0 100%); box-shadow: 0 4px 12px rgba(191,174,224,0.10);">
     <div class="container">
-      <a href="/" class="navbar-brand">Lbt Acessórios</a>
-
-      <!-- Menu para login/cadastro ou usuário logado -->
-      <div class="user-info">
-        <% if (clienteLogado) { %>
-          <span>Olá, <%= clienteLogado.nome %>!</span>
-          <a href="/logout" class="btn btn-danger">Sair</a> <!-- Botão de logout -->
-          <% } else { %>
-            <a href="/login" class="btn btn-primary">Fazer Login</a>
-            <a href="/cadastro" class="btn btn-secondary">Cadastrar-se</a>
-            <% } %>
+      <a class="navbar-brand d-flex align-items-center" href="/"
+        style="font-weight:700; font-size:1.7rem; letter-spacing:2px; color:#a68bc7;">
+        <i class="bi bi-gem me-2" style="font-size:3rem; color:#a68bc7;"></i>
+        Lbt Acessórios
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item">
+            <a class="nav-link active" href="/" style="color:#a68bc7;">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/carrinho" style="color:#a68bc7;">
+              <i class="bi bi-cart" style="font-size:1.3rem;"></i>
+              <span class="d-none d-lg-inline">Carrinho</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/meus-pedidos" style="color:#a68bc7;">Meus Pedidos</a>
+          </li>
+          <% if (clienteLogado) { %>
+            <li class="nav-item ms-2">
+              <span class="navbar-text fw-bold" style="color:#a68bc7;">
+                <i class="bi bi-person-circle me-1"></i>
+                <%= clienteLogado.nome %>
+              </span>
+              <a href="/logout" class="btn btn-outline-secondary btn-sm ms-2"
+                style="border-color:#a68bc7; color:#a68bc7;">Sair</a>
+            </li>
+            <% } else { %>
+              <li class="nav-item ms-2">
+                <a href="/login" class="btn btn-secondary btn-sm" style="background:#a68bc7; border:none;">Login</a>
+              </li>
+              <% } %>
+        </ul>
       </div>
     </div>
   </nav>
-
-  <!-- Banner -->
-  <div class="banner">
-    <h1>Lbt Acessórios</h1>
-    <p>Encontre a semi-joia perfeita para você!</p>
-  </div>
 
   <div class="container-fluid">
     <div class="row">
@@ -59,25 +83,35 @@
 
         <!-- Exibindo os produtos dinamicamente -->
         <div class="row">
-          <% produtos.forEach(produto=> { %>
-            <div class="col-md-4">
-              <div class="categoria">
-                <img src="/uploads/<%= produto.imagem %>" alt="<%= produto.nome %>">
-                <h5>
-                  <%= produto.nome %>
-                </h5>
-                <p>
-                  <%= produto.descricao %>
-                </p>
-                <p>
-                  <%= produto.tipo %>
-                </p>
-                <p>Valor R$ <%= typeof produto.preco==='number' && !isNaN(produto.preco) ? produto.preco.toFixed(2)
-                    : 'Valor inválido' %>
-                </p>
+          <% produtos.forEach(function(produto) { %>
+            <div class="col-md-4 mb-4">
+              <div class="card h-100">
+                <img src="/uploads/<%= produto.imagem %>" alt="<%= produto.nome %>" class="card-img-top img-produto"
+                  style="object-fit:cover; width:100%; height:220px; cursor:pointer;" data-bs-toggle="modal"
+                  data-bs-target="#modalImagem" data-img="/uploads/<%= produto.imagem %>">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-primary">
+                    <%= produto.nome %>
+                  </h5>
+                  <p class="card-text text-muted">
+                    <%= produto.descricao %>
+                  </p>
+                  <div class="mt-auto">
+                    <p class="card-text fs-5 fw-bold text-dark">R$ <%= Number(produto.preco).toFixed(2).replace('.', ','
+                        ) %>
+                    </p>
+                    <form class="add-carrinho-form" data-produto-id="<%= produto.id %>">
+                      <input type="hidden" name="produto_id" value="<%= produto.id %>">
+                      <input type="hidden" name="quantidade" value="1">
+                      <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
+                      </button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
-            <% }) %>
+            <% }); %>
         </div>
 
       </div>
@@ -88,9 +122,51 @@
     <p>&copy; 2024 Lbt Acessórios - Todos os direitos reservados</p>
   </div>
 
+  <!-- Modal Bootstrap para exibir imagem ampliada -->
+  <div class="modal fade" id="modalImagem" tabindex="-1" aria-labelledby="modalImagemLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark">
+        <div class="modal-body p-0 text-center">
+          <img src="" id="imagemModal" class="img-fluid rounded" style="max-height:80vh;">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts do Bootstrap e jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.querySelectorAll('.add-carrinho-form').forEach(form => {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const produto_id = this.querySelector('input[name="produto_id"]').value;
+        const quantidade = this.querySelector('input[name="quantidade"]').value;
+
+        fetch('/carrinho/adicionar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ produto_id, quantidade })
+        })
+          .then(response => {
+            if (response.ok) {
+              alert('Produto adicionado ao carrinho!');
+            } else {
+              alert('Erro ao adicionar ao carrinho.');
+            }
+          });
+      });
+    });
+
+    document.querySelectorAll('.img-produto').forEach(img => {
+      img.addEventListener('click', function () {
+        const src = this.getAttribute('data-img');
+        document.getElementById('imagemModal').src = src;
+      });
+    });
+  </script>
 </body>
 
 </html>

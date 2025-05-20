@@ -1,16 +1,4 @@
 /* Estilos para a página */
-.banner {
-  background: url('/uploads/banner-topo.png') no-repeat center center;
-  background-size: cover;
-  color: white;
-  padding: 80px 0;
-  text-align: center;
-}
-
-.banner h1 {
-  font-size: 3rem;
-  font-weight: bold;
-}
 
 .menu-lateral {
   background-color: #f8f9fa;
@@ -96,3 +84,177 @@
   color: #007bff;
   font-size: 1.2rem;
 }
+
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  background: #f8f9fa;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f9c6b2 0%, #f7b7c0 50%, #bfaee0 100%);
+}
+header.bg-primary {
+  background: linear-gradient(90deg, #1a237e 60%, #ffd700 100%);
+  box-shadow: 0 4px 12px rgba(26, 35, 126, 0.15);
+}
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(26, 35, 126, 0.08);
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(26, 35, 126, 0.15);
+}
+.btn-primary,
+.btn-success {
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.img-produto {
+  border-radius: 12px;
+  transition: box-shadow 0.2s;
+}
+.img-produto:hover {
+  box-shadow: 0 4px 16px rgba(26, 35, 126, 0.15);
+}
+
+.login-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+  background: #fff;
+}
+
+.form-control:focus {
+  border-color: #a68bc7;
+  box-shadow: 0 0 0 0.2rem rgba(166, 139, 199, 0.15);
+}
+
+.btn-login {
+  background: #a68bc7;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.btn-login:hover {
+  background: #8d6bb8;
+  color: #fff;
+}
+
+.logo-login {
+  font-size: 2.5rem;
+  color: #a68bc7;
+}
+
+.menu-lateral {
+  min-height: 80vh;
+  background: linear-gradient(120deg, #f9c6b2 0%, #f7b7c0 60%, #bfaee0 100%);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+  padding: 2rem 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.menu-lateral h4 {
+  color: #a68bc7;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+.menu-lateral a {
+  color: #a68bc7;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 0.3rem;
+}
+.menu-lateral a:hover,
+.menu-lateral a.active {
+  background: #fff;
+  color: #bfaee0;
+  text-decoration: none;
+}
+.menu-lateral .btn-success {
+  background: #a68bc7;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  transition: background 0.2s;
+}
+.menu-lateral .btn-success:hover {
+  background: #8d6bb8;
+  color: #fff;
+}
+
+.carrinho-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+  background: #fff;
+  padding: 2rem 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.table thead {
+  background: #f7b7c0;
+  color: #fff;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.btn-carrinho {
+  background: #a68bc7;
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-carrinho:hover {
+  background: #8d6bb8;
+  color: #fff;
+}
+
+.btn-remove {
+  background: #f7b7c0;
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+}
+
+.btn-remove:hover {
+  background: #f9c6b2;
+  color: #fff;
+}
+
+.total-carrinho {
+  color: #a68bc7;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
