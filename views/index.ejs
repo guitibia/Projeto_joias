@@ -63,59 +63,61 @@
 
   <div class="container-fluid">
     <div class="row">
-      <!-- Menu lateral -->
-      <div class="col-md-3 menu-lateral">
-        <h4>Categorias</h4>
-        <a href="/">Todos</a>
-        <a href="/categoria/Anel">Anéis</a>
-        <a href="/categoria/Pulseira">Pulseiras</a>
-        <a href="/categoria/Colar">Colares</a>
-        <a href="/categoria/Conjunto">Conjuntos</a>
+      <div class="row flex-column flex-md-row">
+        <!-- Menu lateral -->
+        <div class="col-md-3 menu-lateral order-1 order-md-0">
+          <h4>Categorias</h4>
+          <a href="/">Todos</a>
+          <a href="/categoria/Anel">Anéis</a>
+          <a href="/categoria/Pulseira">Pulseiras</a>
+          <a href="/categoria/Colar">Colares</a>
+          <a href="/categoria/Conjunto">Conjuntos</a>
 
-        <!-- Exibindo a opção de cadastro de produtos somente para administradores -->
-        <% if (clienteLogado && clienteLogado.is_admin===1) { %>
-          <a href="/admin/cadastrar-produto" class="btn btn-success">Cadastrar Novo Produto</a>
-          <a href="/admin/pedidos" class="btn btn-success">Lista de Pedidos</a>
-          <% } %>
-      </div>
+          <!-- Exibindo a opção de cadastro de produtos somente para administradores -->
+          <% if (clienteLogado && clienteLogado.is_admin===1) { %>
+            <a href="/admin/cadastrar-produto" class="btn btn-success">Cadastrar Novo Produto</a>
+            <a href="/admin/pedidos" class="btn btn-success">Lista de Pedidos</a>
+            <% } %>
+        </div>
 
-      <div class="col-md-9 conteudo-principal">
-        <h2>Novidades em Semi-Joias</h2>
-        <p>Explore nossa coleção de semi-joias e descubra peças exclusivas para realçar sua beleza!</p>
+        <div class="col-md-9 conteudo-principal order-0 order-md-1">
+          <h2>Novidades em Semi-Joias</h2>
+          <p>Explore nossa coleção de semi-joias e descubra peças exclusivas para realçar sua beleza!</p>
 
-        <!-- Exibindo os produtos dinamicamente -->
-        <div class="row">
-          <% produtos.forEach(function(produto) { %>
-            <div class="col-md-4 mb-4">
-              <div class="card h-100">
-                <img src="/uploads/<%= produto.imagem %>" alt="<%= produto.nome %>" class="card-img-top img-produto"
-                  style="object-fit:cover; width:100%; height:220px; cursor:pointer;" data-bs-toggle="modal"
-                  data-bs-target="#modalImagem" data-img="/uploads/<%= produto.imagem %>">
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title text-primary">
-                    <%= produto.nome %>
-                  </h5>
-                  <p class="card-text text-muted">
-                    <%= produto.descricao %>
-                  </p>
-                  <div class="mt-auto">
-                    <p class="card-text fs-5 fw-bold text-dark">R$ <%= Number(produto.preco).toFixed(2).replace('.', ','
-                        ) %>
+          <!-- Exibindo os produtos dinamicamente -->
+          <div class="row">
+            <% produtos.forEach(function(produto) { %>
+              <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                  <img src="/uploads/<%= produto.imagem %>" alt="<%= produto.nome %>" class="card-img-top img-produto"
+                    style="object-fit:cover; width:100%; height:220px; cursor:pointer;" data-bs-toggle="modal"
+                    data-bs-target="#modalImagem" data-img="/uploads/<%= produto.imagem %>">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-primary">
+                      <%= produto.nome %>
+                    </h5>
+                    <p class="card-text text-muted">
+                      <%= produto.descricao %>
                     </p>
-                    <form class="add-carrinho-form" data-produto-id="<%= produto.id %>">
-                      <input type="hidden" name="produto_id" value="<%= produto.id %>">
-                      <input type="hidden" name="quantidade" value="1">
-                      <button type="submit" class="btn btn-success w-100">
-                        <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
-                      </button>
-                    </form>
+                    <div class="mt-auto">
+                      <p class="card-text fs-5 fw-bold text-dark">R$ <%=
+                          Number(produto.preco).toFixed(2).replace('.', ',' ) %>
+                      </p>
+                      <form class="add-carrinho-form" data-produto-id="<%= produto.id %>">
+                        <input type="hidden" name="produto_id" value="<%= produto.id %>">
+                        <input type="hidden" name="quantidade" value="1">
+                        <button type="submit" class="btn btn-success w-100">
+                          <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <% }); %>
-        </div>
+              <% }); %>
+          </div>
 
+        </div>
       </div>
     </div>
   </div>
