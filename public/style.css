@@ -258,3 +258,74 @@ h3 {
   font-weight: 700;
 }
 
+.pedidos-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+  background: #fff;
+  padding: 2rem 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.table thead {
+  background: #f7b7c0;
+  color: #fff;
+}
+
+.status-pendente {
+  color: #bfa100;
+  font-weight: 600;
+}
+
+.status-entregue {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-aguardando {
+  color: #ff9800;
+  font-weight: 600;
+}
+
+.admin-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+  background: #fff;
+  padding: 2rem 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cadastro-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(191, 174, 224, 0.12);
+  background: #fff;
+  padding: 2rem 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-cadastro {
+  background: #a68bc7;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.btn-cadastro:hover {
+  background: #8d6bb8;
+  color: #fff;
+}
+
+.form-label {
+  color: #a68bc7;
+  font-weight: 600;
+}
