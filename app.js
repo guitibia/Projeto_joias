@@ -46,33 +46,40 @@ app.set("views", path.join(__dirname, "views")); // Pasta onde os arquivos .ejs 
 
 // Rota principal para renderizar a página com os produtos e verificar login
 app.get("/", (req, res) => {
-  const query = "SELECT * FROM produtos"; // Exemplo, ajuste conforme sua lógica
+  const query = "SELECT * FROM produtos";
   db.query(query, (err, produtos) => {
     if (err) throw err;
 
-    // Converte o preço para número, caso seja necessário
     produtos = produtos.map((produto) => ({
       ...produto,
-      preco: parseFloat(produto.preco) || 0, // Garantir que 'preco' seja um número
+      preco: parseFloat(produto.preco) || 0,
     }));
 
     let clienteLogado = null;
+    const tituloCategoria = "Novidades em Semi-Joias"; // ou "Todos" se preferir
+
     if (req.session.cliente_id) {
-      // Verificando se o cliente está logado
       db.query(
         "SELECT * FROM clientes WHERE id = ?",
         [req.session.cliente_id],
         (err, results) => {
           if (err) throw err;
           clienteLogado = results[0];
-
-          // Renderiza a página passando os dados
-          res.render("index", { produtos, clienteLogado });
+          res.render("index", {
+            produtos,
+            clienteLogado,
+            mensagem: null,
+            tituloCategoria,
+          });
         }
       );
     } else {
-      // Se não houver cliente logado, renderiza sem clienteLogado
-      res.render("index", { produtos, clienteLogado: null });
+      res.render("index", {
+        produtos,
+        clienteLogado: null,
+        mensagem: null,
+        tituloCategoria,
+      });
     }
   });
 });
@@ -242,8 +249,6 @@ app.post("/admin/cadastrar-produto", upload.single("imagem"), (req, res) => {
 // Rota para exibir produtos filtrados por categoria
 app.get("/categoria/:tipo", (req, res) => {
   const tipo = req.params.tipo;
-  console.log("Categoria recebida:", tipo); // Para ver se a rota está sendo chamada corretamente
-
   const query = "SELECT * FROM produtos WHERE tipo = ?";
 
   db.query(query, [tipo], (err, produtos) => {
@@ -253,16 +258,34 @@ app.get("/categoria/:tipo", (req, res) => {
     }
 
     let clienteLogado = null;
+    let tituloCategoria = tipo;
+    switch (tipo) {
+      case "Anel":
+        tituloCategoria = "Anéis";
+        break;
+      case "Pulseira":
+        tituloCategoria = "Pulseiras";
+        break;
+      case "Colar":
+        tituloCategoria = "Colares";
+        break;
+      case "Conjunto":
+        tituloCategoria = "Conjuntos";
+        break;
+      case "Brincos":
+        tituloCategoria = "Brincos";
+        break;
+      default:
+        tituloCategoria = "Produtos";
+    }
+
     if (req.session.cliente_id) {
-      // Verificar se o cliente está logado
       db.query(
         "SELECT * FROM clientes WHERE id = ?",
         [req.session.cliente_id],
         (err, results) => {
           if (err) throw err;
-          clienteLogado = results[0]; // Armazena as informações do cliente logado
-
-          // Se a consulta ao banco de dados for bem-sucedida, renderiza a página com os dados
+          clienteLogado = results[0];
           res.render("index", {
             produtos,
             clienteLogado,
@@ -270,11 +293,11 @@ app.get("/categoria/:tipo", (req, res) => {
               produtos.length === 0
                 ? "Nenhum produto encontrado para esta categoria."
                 : null,
+            tituloCategoria,
           });
         }
       );
     } else {
-      // Se não houver cliente logado, renderiza a página sem clienteLogado
       res.render("index", {
         produtos,
         clienteLogado: null,
@@ -282,6 +305,7 @@ app.get("/categoria/:tipo", (req, res) => {
           produtos.length === 0
             ? "Nenhum produto encontrado para esta categoria."
             : null,
+        tituloCategoria,
       });
     }
   });
